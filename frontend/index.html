@@ -4,9 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuantumGuard | Post-Quantum Cybersecurity</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-dark: #0f111a;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.5);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+        }
         .landing-container {
             position: relative;
             display: flex;
@@ -105,7 +118,7 @@
 </head>
 <body>
     <div class="landing-container">
-        <img src="/static/logo.png" alt="QuantumGuard" class="hero-logo">
+        <img src="/logo.png" alt="QuantumGuard" class="hero-logo">
         <h1>QuantumGuard</h1>
         <p>The enterprise-grade Post-Quantum Cryptography (PQC) readiness scanner. Instantly detect vulnerabilities, analyze legacy cipher suites, and prepare your public-facing infrastructure for the quantum era.</p>
         

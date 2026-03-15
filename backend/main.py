@@ -71,10 +71,6 @@ async def get_stats():
 
 from fastapi.responses import FileResponse
 
-# Mount styling and scripts
-frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-app.mount("/static", StaticFiles(directory=frontend_path), name="static")
-
 @app.get("/")
 async def serve_landing():
     return FileResponse(os.path.join(frontend_path, "index.html"))
@@ -82,6 +78,9 @@ async def serve_landing():
 @app.get("/dashboard")
 async def serve_dashboard():
     return FileResponse(os.path.join(frontend_path, "dashboard.html"))
+
+# Mount styling and scripts at root (fallback)
+app.mount("/", StaticFiles(directory=frontend_path), name="static")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
