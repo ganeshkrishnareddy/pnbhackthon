@@ -15,6 +15,37 @@ document.addEventListener('DOMContentLoaded', () => {
         loading.classList.remove('hidden');
         results.classList.add('hidden');
         
+        // Mock scanner trigger
+        if (target.toLowerCase() === 'fake') {
+            setTimeout(() => {
+                const fakeResult = {
+                    success: true,
+                    target: "demo-banking-api.internal",
+                    cbom: { tls_version: "TLSv1.2", cipher_suite: "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256", key_size_bits: 128, certificate_authority: "CN=Demo Local CA" },
+                    assessment: { risk_level: "Legacy", pqc_label: "Not PQC Ready", recommendations: ["Migrate to TLS 1.3.", "Adopt hybrid post-quantum key exchange mechanisms (e.g., X25519Kyber768Draft00)"] }
+                };
+                displayResults(fakeResult);
+                
+                // Add to history
+                window.lastScans.unshift({
+                    target: fakeResult.target,
+                    risk: fakeResult.assessment.risk_level,
+                    label: fakeResult.assessment.pqc_label,
+                    time: new Date().toISOString(),
+                    cbom: fakeResult.cbom,
+                    assessment: fakeResult.assessment
+                });
+                
+                // Update specific views immediately so the new fake data appears
+                renderAssetsView(); 
+                renderRiskView();
+                
+                btn.disabled = false;
+                loading.classList.add('hidden');
+            }, 1500);
+            return;
+        }
+        
         try {
             const response = await fetch('/api/scan', {
                 method: 'POST',
@@ -34,10 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (err) {
             console.error(err);
-            alert('Encountered an error while communicating with the server.');
+            alert('Failed to connect to the backend. Please type "fake" in the scan box to view a simulated scan result.');
         } finally {
-            btn.disabled = false;
-            loading.classList.add('hidden');
+            if (target.toLowerCase() !== 'fake') {
+                btn.disabled = false;
+                loading.classList.add('hidden');
+            }
         }
     });
 });
@@ -162,7 +195,8 @@ function renderSettingsView() {
 
     document.getElementById('btn-logout').addEventListener('click', () => {
         localStorage.removeItem('qg_role');
-        window.location.href = '/';
+        // Explicit root navigation for Vercel
+        window.location.assign('/'); 
     });
 }
 
