@@ -83,8 +83,8 @@ async def serve_landing():
 async def serve_dashboard():
     return FileResponse(os.path.join(frontend_path, "dashboard.html"))
 
-# Mount styling and scripts at root (fallback)
-app.mount("/", StaticFiles(directory=frontend_path), name="static")
+# Mount styling and scripts at explicit path
+app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
