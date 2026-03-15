@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum-Proof Systems Scanner | ProgVision</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="logo.png" alt="Quantum Scanner Logo" class="logo-image">
+                <h2>ProgVision</h2>
+            </div>
+            <nav>
+                <ul id="sidebar-nav">
+                    <li class="active" data-target="view-dashboard">Dashboard</li>
+                    <li data-target="view-assets">Assets Inventory</li>
+                    <li data-target="view-risk">Risk Assessment</li>
+                    <li data-target="view-settings">Settings</li>
+                    <li data-target="view-developers">Developers</li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <p>v1.0.0-pqc</p>
+                <p>PSB Hackathon 2026</p>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="page-title">Quantum-Proof Systems Scanner</h1>
+                <div class="user-profile">Admin</div>
+            </header>
+
+            <div id="view-dashboard" class="view-section active">
+                <section class="stats-grid">
+                <div class="stat-card">
+                    <h3>Scanned Assets</h3>
+                    <p class="stat-val" id="total-scans">0</p>
+                </div>
+                <div class="stat-card danger">
+                    <h3>Critical Risks</h3>
+                    <p class="stat-val" id="critical-risks">0</p>
+                </div>
+                <div class="stat-card warning">
+                    <h3>Legacy Systems</h3>
+                    <p class="stat-val" id="legacy-risks">0</p>
+                </div>
+                <div class="stat-card success">
+                    <h3>PQC Ready</h3>
+                    <p class="stat-val" id="pqc-ready">0</p>
+                </div>
+            </section>
+
+            <section class="dashboard-panels">
+                <div class="panel scan-panel">
+                    <h2>Initiate New Scan</h2>
+                    <p>Enter an internet-exposed asset (Domain/IP) to evaluate TLS configuration and PQC readiness.</p>
+                    <form id="scan-form">
+                        <input type="text" id="target-url" placeholder="e.g., mail.google.com" required>
+                        <button type="submit" id="scan-btn">Start Scan</button>
+                    </form>
+                    
+                    <div id="loading" class="hidden">
+                        <div class="spinner"></div>
+                        <p>Analyzing Cryptographic Elements...</p>
+                    </div>
+                </div>
+
+                <div class="panel chart-panel">
+                    <h2>Risk Distribution</h2>
+                    <div class="chart-container">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel results-panel hidden" id="results-panel">
+                <h2>Scan Results: <span id="res-target"></span></h2>
+                
+                <div class="assessment-banner" id="res-banner">
+                    <h3 id="res-label">Evaluating...</h3>
+                    <p>Risk Level: <span id="res-risk">Pending</span></p>
+                </div>
+
+                <div class="details-grid">
+                    <div class="detail-box">
+                        <h4>CBOM Details</h4>
+                        <ul>
+                            <li><strong>TLS Version:</strong> <span id="res-tls"></span></li>
+                            <li><strong>Cipher Suite:</strong> <span id="res-cipher"></span></li>
+                            <li><strong>Key Size:</strong> <span id="res-keysize"></span> bits</li>
+                            <li><strong>Authority:</strong> <span id="res-ca"></span></li>
+                        </ul>
+                    </div>
+                    <div class="detail-box">
+                        <h4>Recommendations</h4>
+                        <ul id="res-recs">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel history-panel">
+                <h2>Recent Scans</h2>
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Target</th>
+                            <th>Risk Level</th>
+                            <th>PQC Label</th>
+                            <th>Certificate Initialized</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </section>
+            </div>
+
+            <!-- Additional Sections -->
+            <div id="view-assets" class="view-section hidden">
+                <h2>Assets Inventory</h2>
+                <div class="panel">
+                    <p>No assets manually registered yet. Use the dashboard to perform live scans.</p>
+                </div>
+            </div>
+
+            <div id="view-risk" class="view-section hidden">
+                <h2>Risk Assessment</h2>
+                <div class="panel">
+                    <p>Comprehensive risk models and historical analysis will appear here.</p>
+                </div>
+            </div>
+
+            <div id="view-settings" class="view-section hidden">
+                <h2>Settings</h2>
+                <div class="panel">
+                    <p>Scanner configurations, API keys, and notification preferences.</p>
+                </div>
+            </div>
+
+            <div id="view-developers" class="view-section hidden">
+                <h2>Development Team</h2>
+                <div class="panel team-panel">
+                    <h3>Institute: Lovely Professional University</h3>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <h4>P Ganesh Krishna Reddy</h4>
+                            <p>Lead Developer</p>
+                            <a href="mailto:jaikrishna9437@gmail.com">jaikrishna9437@gmail.com</a><br>
+                            <a href="https://github.com/ganeshkrishnareddy" target="_blank">GitHub</a>
+                        </div>
+                        <div class="team-member">
+                            <h4>Adireddy Pavan</h4>
+                            <p>Developer</p>
+                        </div>
+                        <div class="team-member">
+                            <h4>Cheepuri Venkat Veerendra</h4>
+                            <p>Developer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
