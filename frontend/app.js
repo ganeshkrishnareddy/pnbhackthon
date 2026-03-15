@@ -171,52 +171,73 @@ window.lastScans = [];
 async function fetchStats() {
     try {
         const response = await fetch('/api/stats');
+        if (!response.ok) {
+            throw new Error(`API returned ${response.status}`);
+        }
         const stats = await response.json();
         
         let validScans = stats.recent_scans_raw || [];
         
-        // Inject Dummy Data if empty to ensure the demo looks good on Vercel bootups
         if (validScans.length === 0) {
-            validScans = [
-                {
-                    target: "api.banking-gateway.net",
-                    cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384", key_size_bits: 256, certificate_authority: "CN=DigiCert Global Root G2" },
-                    assessment: { risk_level: "Standard", pqc_label: "PQC Ready", recommendations: ["Monitor NIST PQC standardization for key exchange migrations."] },
-                    time: new Date().toISOString()
-                },
-                {
-                    target: "legacy-portal.finance.org",
-                    cbom: { tls_version: "TLSv1.1", cipher_suite: "DES-CBC3-SHA", key_size_bits: 112, certificate_authority: "CN=Old Root CA" },
-                    assessment: { risk_level: "Critical", pqc_label: "Vulnerable", recommendations: ["Upgrade to TLS 1.3 immediately.", "Disable 3DES cipher suites."] },
-                    time: new Date(Date.now() - 86400000).toISOString()
-                },
-                {
-                    target: "secure.internal-vpn.com",
-                    cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384 (Kyber Key Exchange)", key_size_bits: 512, certificate_authority: "CN=Private Enterprise CA" },
-                    assessment: { risk_level: "Elite", pqc_label: "Fully Quantum Safe", recommendations: ["Configuration exceeds standard requirements."] },
-                    time: new Date(Date.now() - 172800000).toISOString()
-                }
-            ];
-            
-            // Re-calculate stats for dummy data
-            stats.total_scans = 3;
-            stats.risk_distribution = { 'Critical': 1, 'Legacy': 0, 'Standard': 1, 'Elite': 1 };
-            stats.pqc_labels = { 'Fully Quantum Safe': 1, 'PQC Ready': 1, 'Not PQC Ready': 0, 'Vulnerable': 1 };
-            stats.recent_scans = validScans.map(s => ({ target: s.target, risk: s.assessment.risk_level, label: s.assessment.pqc_label, time: s.time }));
+            injectDummyData(stats, validScans);
         }
 
-        window.lastScans = validScans; 
-
-        document.getElementById('total-scans').innerText = stats.total_scans;
-        document.getElementById('critical-risks').innerText = stats.risk_distribution['Critical'] || 0;
-        document.getElementById('legacy-risks').innerText = stats.risk_distribution['Legacy'] || 0;
-        document.getElementById('pqc-ready').innerText = stats.pqc_labels['PQC Ready'] + stats.pqc_labels['Fully Quantum Safe'] || 0;
-        
-        updateChart(stats.risk_distribution);
-        updateHistory(stats.recent_scans);
+        renderDashboardStats(stats, validScans);
     } catch (err) {
-        console.error("Error fetching stats:", err);
+        console.error("Error fetching stats, falling back to dummy data:", err);
+        
+        const dummyStats = {
+            total_scans: 0,
+            risk_distribution: { 'Critical': 0, 'Legacy': 0, 'Standard': 0, 'Elite': 0 },
+            pqc_labels: { 'Fully Quantum Safe': 0, 'PQC Ready': 0, 'Not PQC Ready': 0, 'Vulnerable': 0 },
+            recent_scans: [],
+            recent_scans_raw: []
+        };
+        
+        let validScans = [];
+        injectDummyData(dummyStats, validScans);
+        renderDashboardStats(dummyStats, validScans);
     }
+}
+
+function injectDummyData(stats, validScans) {
+    validScans.push(
+        {
+            target: "api.banking-gateway.net",
+            cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384", key_size_bits: 256, certificate_authority: "CN=DigiCert Global Root G2" },
+            assessment: { risk_level: "Standard", pqc_label: "PQC Ready", recommendations: ["Monitor NIST PQC standardization for key exchange migrations."] },
+            time: new Date().toISOString()
+        },
+        {
+            target: "legacy-portal.finance.org",
+            cbom: { tls_version: "TLSv1.1", cipher_suite: "DES-CBC3-SHA", key_size_bits: 112, certificate_authority: "CN=Old Root CA" },
+            assessment: { risk_level: "Critical", pqc_label: "Vulnerable", recommendations: ["Upgrade to TLS 1.3 immediately.", "Disable 3DES cipher suites."] },
+            time: new Date(Date.now() - 86400000).toISOString()
+        },
+        {
+            target: "secure.internal-vpn.com",
+            cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384 (Kyber Key Exchange)", key_size_bits: 512, certificate_authority: "CN=Private Enterprise CA" },
+            assessment: { risk_level: "Elite", pqc_label: "Fully Quantum Safe", recommendations: ["Configuration exceeds standard requirements."] },
+            time: new Date(Date.now() - 172800000).toISOString()
+        }
+    );
+    
+    stats.total_scans = 3;
+    stats.risk_distribution = { 'Critical': 1, 'Legacy': 0, 'Standard': 1, 'Elite': 1 };
+    stats.pqc_labels = { 'Fully Quantum Safe': 1, 'PQC Ready': 1, 'Not PQC Ready': 0, 'Vulnerable': 1 };
+    stats.recent_scans = validScans.map(s => ({ target: s.target, risk: s.assessment.risk_level, label: s.assessment.pqc_label, time: s.time }));
+}
+
+function renderDashboardStats(stats, validScans) {
+    window.lastScans = validScans; 
+
+    document.getElementById('total-scans').innerText = stats.total_scans;
+    document.getElementById('critical-risks').innerText = stats.risk_distribution['Critical'] || 0;
+    document.getElementById('legacy-risks').innerText = stats.risk_distribution['Legacy'] || 0;
+    document.getElementById('pqc-ready').innerText = stats.pqc_labels['PQC Ready'] + stats.pqc_labels['Fully Quantum Safe'] || 0;
+    
+    updateChart(stats.risk_distribution);
+    updateHistory(stats.recent_scans);
 }
 
 function displayResults(data) {
