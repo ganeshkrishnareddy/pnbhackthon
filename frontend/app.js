@@ -67,15 +67,146 @@ function setupNavigation() {
             } else {
                 pageTitle.innerText = item.innerText;
             }
+            // Render Specific View Data
+            if (targetId === 'view-assets') renderAssetsView();
+            if (targetId === 'view-risk') renderRiskView();
+            if (targetId === 'view-settings') renderSettingsView();
         });
     });
 }
+
+function renderAssetsView() {
+    const assetsContainer = document.querySelector('#view-assets .panel');
+    let html = `
+        <div class="table-controls" style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+            <input type="text" id="asset-search" placeholder="Search assets..." style="padding: 0.5rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border); color: white; border-radius: 6px; flex: 1;">
+        </div>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Domain / IP</th>
+                    <th>TLS Version</th>
+                    <th>Cipher Suite</th>
+                    <th>Provider</th>
+                </tr>
+            </thead>
+            <tbody id="assets-tbody">
+            </tbody>
+        </table>
+    `;
+    assetsContainer.innerHTML = html;
+    
+    const tbody = document.getElementById('assets-tbody');
+    window.lastScans.forEach(s => {
+        tbody.insertAdjacentHTML('beforeend', `<tr>
+            <td><code>${s.target}</code></td>
+            <td>${s.cbom.tls_version}</td>
+            <td><span style="font-size: 0.8rem">${s.cbom.cipher_suite}</span></td>
+            <td><span style="font-size: 0.8rem">${s.cbom.certificate_authority.split(',')[0].split('=')[1] || 'Unknown'}</span></td>
+        </tr>`);
+    });
+}
+
+function renderRiskView() {
+    const riskContainer = document.querySelector('#view-risk .panel');
+    let highRiskCount = window.lastScans.filter(s => s.assessment.risk_level === 'Critical' || s.assessment.risk_level === 'Legacy').length;
+    let score = 100 - (highRiskCount * 15);
+    if(score < 0) score = 0;
+
+    let html = `
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="color: var(--text-muted)">Global Security Score</h3>
+            <div style="font-size: 4rem; font-weight: 800; color: ${score > 70 ? 'var(--success)' : 'var(--danger)'}">${score}/100</div>
+        </div>
+        <h4>Detected Vulnerabilities</h4>
+        <ul style="margin-top: 1rem; color: var(--text-muted); list-style: disc; padding-left: 20px;">
+            ${highRiskCount === 0 ? '<li>No critical vulnerabilities detected across active assets.</li>' : ''}
+            ${window.lastScans.map(s => {
+                if(s.assessment.risk_level === 'Critical') return `<li style="color: var(--danger)">[CRITICAL] ${s.target}: Weak cipher or legacy TLS detected.</li>`;
+                if(s.assessment.risk_level === 'Legacy') return `<li style="color: var(--warning)">[LEGACY] ${s.target}: Lacks quantum-safe key exchange methods.</li>`;
+                return '';
+            }).join('')}
+        </ul>
+    `;
+    riskContainer.innerHTML = html;
+}
+
+function renderSettingsView() {
+    const settingsContainer = document.querySelector('#view-settings .panel');
+    const isStrict = localStorage.getItem('qg_strict_mode') === 'true';
+    let html = `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border);">
+            <div>
+                <h4>Strict PQC Mode</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Flags all non-quantum algorithms as Critical instantly.</p>
+            </div>
+            <button id="toggle-strict" class="auth-btn ${isStrict ? 'btn-admin' : 'btn-user'}" style="padding: 0.5rem 1rem">${isStrict ? 'Enabled' : 'Disabled'}</button>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0;">
+            <div>
+                <h4>Clear Session Data</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Logs you out and resets browser caches.</p>
+            </div>
+            <button id="btn-logout" class="auth-btn" style="padding: 0.5rem 1rem; background: var(--danger); border: none; color: white;">Logout</button>
+        </div>
+    `;
+    settingsContainer.innerHTML = html;
+
+    document.getElementById('toggle-strict').addEventListener('click', (e) => {
+        const strict = localStorage.getItem('qg_strict_mode') !== 'true';
+        localStorage.setItem('qg_strict_mode', strict);
+        e.target.innerText = strict ? 'Enabled' : 'Disabled';
+        e.target.className = `auth-btn ${strict ? 'btn-admin' : 'btn-user'}`;
+        document.body.classList.toggle('strict-mode', strict);
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', () => {
+        localStorage.removeItem('qg_role');
+        window.location.href = '/';
+    });
+}
+
+window.lastScans = [];
 
 async function fetchStats() {
     try {
         const response = await fetch('/api/stats');
         const stats = await response.json();
         
+        let validScans = stats.recent_scans_raw || [];
+        
+        // Inject Dummy Data if empty to ensure the demo looks good on Vercel bootups
+        if (validScans.length === 0) {
+            validScans = [
+                {
+                    target: "api.banking-gateway.net",
+                    cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384", key_size_bits: 256, certificate_authority: "CN=DigiCert Global Root G2" },
+                    assessment: { risk_level: "Standard", pqc_label: "PQC Ready", recommendations: ["Monitor NIST PQC standardization for key exchange migrations."] },
+                    time: new Date().toISOString()
+                },
+                {
+                    target: "legacy-portal.finance.org",
+                    cbom: { tls_version: "TLSv1.1", cipher_suite: "DES-CBC3-SHA", key_size_bits: 112, certificate_authority: "CN=Old Root CA" },
+                    assessment: { risk_level: "Critical", pqc_label: "Vulnerable", recommendations: ["Upgrade to TLS 1.3 immediately.", "Disable 3DES cipher suites."] },
+                    time: new Date(Date.now() - 86400000).toISOString()
+                },
+                {
+                    target: "secure.internal-vpn.com",
+                    cbom: { tls_version: "TLSv1.3", cipher_suite: "TLS_AES_256_GCM_SHA384 (Kyber Key Exchange)", key_size_bits: 512, certificate_authority: "CN=Private Enterprise CA" },
+                    assessment: { risk_level: "Elite", pqc_label: "Fully Quantum Safe", recommendations: ["Configuration exceeds standard requirements."] },
+                    time: new Date(Date.now() - 172800000).toISOString()
+                }
+            ];
+            
+            // Re-calculate stats for dummy data
+            stats.total_scans = 3;
+            stats.risk_distribution = { 'Critical': 1, 'Legacy': 0, 'Standard': 1, 'Elite': 1 };
+            stats.pqc_labels = { 'Fully Quantum Safe': 1, 'PQC Ready': 1, 'Not PQC Ready': 0, 'Vulnerable': 1 };
+            stats.recent_scans = validScans.map(s => ({ target: s.target, risk: s.assessment.risk_level, label: s.assessment.pqc_label, time: s.time }));
+        }
+
+        window.lastScans = validScans; 
+
         document.getElementById('total-scans').innerText = stats.total_scans;
         document.getElementById('critical-risks').innerText = stats.risk_distribution['Critical'] || 0;
         document.getElementById('legacy-risks').innerText = stats.risk_distribution['Legacy'] || 0;

@@ -1,10 +1,10 @@
-# Quantum-Proof Systems Scanner
+# QuantumGuard Scanner
 
-**Team Name:** ProgVision  
+**Team Name:** QuantumGuard 
 **Institute:** Lovely Professional University
 
 ## Project Overview
-The **Quantum-Proof Systems Scanner** is a web-based platform designed to identify cryptographic assets used by public-facing banking applications and evaluate their readiness against Post-Quantum Cryptography (PQC) threats.
+The **QuantumGuard Scanner** is a web-based platform designed to identify cryptographic assets used by public-facing banking applications and evaluate their readiness against Post-Quantum Cryptography (PQC) threats.
 
 ## Key Features
 * Active Asset Discovery (TLS Certificates, Cipher Suites, Key Exchange mechanisms).

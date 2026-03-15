@@ -16,6 +16,14 @@
       "destination": "/api/index.py"
     },
     {
+      "source": "/static/(.*)",
+      "destination": "/frontend/$1"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/frontend/dashboard.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/frontend/$1"
     }

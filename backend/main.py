@@ -65,12 +65,23 @@ async def get_stats():
         "total_scans": total_scans,
         "risk_distribution": risk_distribution,
         "pqc_labels": pqc_labels,
-        "recent_scans": recent_scans
+        "recent_scans": recent_scans,
+        "recent_scans_raw": list(reversed(scan_history))
     }
 
-# Mount frontend directory for static file serving
+from fastapi.responses import FileResponse
+
+# Mount styling and scripts
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+
+@app.get("/")
+async def serve_landing():
+    return FileResponse(os.path.join(frontend_path, "index.html"))
+
+@app.get("/dashboard")
+async def serve_dashboard():
+    return FileResponse(os.path.join(frontend_path, "dashboard.html"))
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
