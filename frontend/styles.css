@@ -360,3 +360,33 @@ body {
     text-decoration: underline;
     color: var(--primary);
 }
+
+/* Documentation Panel */
+.docs-panel {
+    line-height: 1.6;
+    padding: 2.5rem !important;
+}
+
+.docs-panel h1, .docs-panel h2, .docs-panel h3, .docs-panel h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.docs-panel h1 { font-size: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-top: 0;}
+.docs-panel h2 { font-size: 1.5rem; }
+.docs-panel h3 { font-size: 1.2rem; }
+
+.docs-panel p, .docs-panel ul, .docs-panel li {
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+}
+
+.docs-panel ul {
+    padding-left: 2rem;
+}
+
+.docs-panel strong {
+    color: white;
+}

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -23,7 +24,11 @@
                     <li data-target="view-risk">Risk Assessment</li>
                     <li data-target="view-settings">Settings</li>
                     <li data-target="view-developers">Developers</li>
+                    <li data-target="view-docs">Documentation</li>
                 </ul>
+                <div style="margin-top: auto; padding-top: 1rem;">
+                    <button id="global-logout" class="auth-btn" style="width: 100%; padding: 0.8rem; background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); color: var(--danger); font-size: 0.95rem;">Logout</button>
+                </div>
             </nav>
             <div class="sidebar-footer">
                 <p>v1.0.0-pqc</p>
@@ -144,6 +149,16 @@
                 <h2>Settings</h2>
                 <div class="panel">
                     <p>Scanner configurations, API keys, and notification preferences.</p>
+                </div>
+            </div>
+
+            <div id="view-docs" class="view-section hidden">
+                <h2>System Documentation (SRS)</h2>
+                <div class="panel docs-panel" id="docs-content">
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <div class="spinner"></div>
+                        <p>Loading Requirements...</p>
+                    </div>
                 </div>
             </div>
 

@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchStats();
     setupNavigation();
     
+    document.getElementById('global-logout').addEventListener('click', () => {
+        localStorage.removeItem('qg_role');
+        window.location.assign('/'); 
+    });
+    
     document.getElementById('scan-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         const target = document.getElementById('target-url').value;
@@ -104,8 +109,25 @@ function setupNavigation() {
             if (targetId === 'view-assets') renderAssetsView();
             if (targetId === 'view-risk') renderRiskView();
             if (targetId === 'view-settings') renderSettingsView();
+            if (targetId === 'view-docs') renderDocsView();
         });
     });
+}
+
+async function renderDocsView() {
+    const docsContainer = document.getElementById('docs-content');
+    if (docsContainer.getAttribute('data-loaded') === 'true') return;
+    
+    try {
+        const response = await fetch('/srs.md');
+        if (!response.ok) throw new Error('Failed to load documentation');
+        const text = await response.text();
+        docsContainer.innerHTML = marked.parse(text);
+        docsContainer.setAttribute('data-loaded', 'true');
+    } catch (err) {
+        docsContainer.innerHTML = '<p style="color: var(--danger)">Error loading System Requirements Specification (SRS) document.</p>';
+        console.error(err);
+    }
 }
 
 function renderAssetsView() {
