@@ -71,6 +71,10 @@ async def get_stats():
 
 from fastapi.responses import FileResponse
 
+# Get absolute path for frontend directory
+base_dir = os.path.dirname(os.path.dirname(__file__))
+frontend_path = os.path.join(base_dir, "frontend")
+
 @app.get("/")
 async def serve_landing():
     return FileResponse(os.path.join(frontend_path, "index.html"))
