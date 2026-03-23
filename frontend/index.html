@@ -4,135 +4,312 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuantumGuard | Post-Quantum Cybersecurity</title>
-    <link rel="stylesheet" href="/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0f111a;
-            --primary: #3b82f6;
-            --primary-glow: rgba(59, 130, 246, 0.5);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-        }
-        body {
-            margin: 0;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
-        }
-        .landing-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            padding: 2rem;
-            background: radial-gradient(circle at center, rgba(20,25,40,1) 0%, var(--bg-dark) 100%);
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        /* Grid Background Effect */
-        .landing-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        .hero-logo {
-            width: 140px;
-            height: 140px;
-            border-radius: 28px;
-            object-fit: cover;
-            box-shadow: 0 0 60px var(--primary-glow);
-            margin-bottom: 2.5rem;
-            animation: float 6s ease-in-out infinite;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .landing-container h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #ffffff, #60a5fa);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
-        }
-        .landing-container p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            margin-bottom: 3.5rem;
-            line-height: 1.7;
-        }
-        .auth-buttons {
-            display: flex;
-            gap: 1.5rem;
-            z-index: 10;
-        }
-        .auth-btn {
-            padding: 1.2rem 3rem;
-            font-size: 1.15rem;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-        }
-        .btn-admin {
-            background: linear-gradient(135deg, var(--primary), #2563eb);
-            color: white;
-            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn-admin:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.6);
-        }
-        .btn-user {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            color: var(--text-main);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .btn-user:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-4px) scale(1.02);
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); box-shadow: 0 0 50px var(--primary-glow); }
-            50% { transform: translateY(-20px); box-shadow: 0 20px 70px var(--primary-glow); }
-            100% { transform: translateY(0px); box-shadow: 0 0 50px var(--primary-glow); }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/landing.css">
 </head>
 <body>
-    <div class="landing-container">
-        <img src="/logo.png" alt="QuantumGuard" class="hero-logo">
-        <h1>QuantumGuard</h1>
+    <div class="bg-mesh"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#hero" class="nav-logo">
+            <img src="/static/logo.png" alt="QuantumGuard">
+            QuantumGuard
+        </a>
+        <button class="menu-toggle">☰</button>
+        <div class="nav-links">
+            <a href="#why-us">Why Us</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <button class="nav-btn" onclick="login('Admin')">Admin Login</button>
+            <button class="nav-btn" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border);" onclick="login('Security Analyst')">Analyst Login</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <img src="/static/logo.png" alt="QuantumGuard" class="hero-logo">
+        <h1>QuantumGuard Scanner</h1>
         <p>The enterprise-grade Post-Quantum Cryptography (PQC) readiness scanner. Instantly detect vulnerabilities, analyze legacy cipher suites, and prepare your public-facing infrastructure for the quantum era.</p>
+        <div class="hero-btns">
+            <button class="btn-primary" onclick="login('Admin')">Start Free Scan</button>
+            <a href="#why-us" class="btn-secondary" style="display:inline-block; text-align:center; text-decoration: none;">Learn More</a>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Interactive Live Scan Demo -->
+    <section id="live-demo" style="padding: 4rem 5%; background: rgba(15, 17, 26, 0.95); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); min-height: auto;">
+        <div style="max-width: 950px; margin: 0 auto; width: 100%;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.2rem; margin-bottom: 1rem; color: white;">Try Live Intelligence Scan</h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">See how QuantumGuard provides instant Cryptographic Bill of Materials (CBOM) and predicts future risks.</p>
+            </div>
+            
+            <div style="background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                    <input type="text" id="demo-input" placeholder="Enter target (e.g., pnbbanking.in)" style="flex: 1; min-width: 250px; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 1.05rem; outline: none; transition: 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
+                    <button id="demo-btn" onclick="runDemoScan()" style="padding: 0 2.5rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: 0.2s; min-height: 50px;" onmouseover="if(!this.disabled) this.style.background='#2563eb'" onmouseout="if(!this.disabled) this.style.background='var(--primary)'">Analyze Target</button>
+                </div>
+                
+                <div id="demo-output" style="display: none; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9d1d9; line-height: 1.6;">
+                    <div id="demo-loader" style="color: var(--primary); margin-bottom: 0.5rem; display: none; align-items: center; gap: 10px;">
+                        <span class="spinner" style="width: 15px; height: 15px; display: inline-block;"></span>
+                        [System] Initializing deep cryptographic handshake with target...
+                    </div>
+                    <div id="demo-results" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                            <!-- TLS Analysis -->
+                            <div>
+                                <h4 style="color: white; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-family: 'Inter', sans-serif;">Live Analysis</h4>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span>TLS Version:</span> <span style="color: #f87171; font-weight: 600;">1.2 ❌</span></div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span>Cipher Suite:</span> <span style="color: #f87171; font-weight: 600;">AES-128-GCM ❌</span></div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;"><span>Risk Level:</span> <span style="color: #fbbf24; font-weight: 600;">Medium ⚠️</span></div>
+                                <div style="display: flex; justify-content: space-between;"><span>PQC Status:</span> <span style="color: #f87171; font-weight: 600;">Not Ready ❌</span></div>
+                            </div>
+                            <!-- CBOM Preview -->
+                            <div>
+                                <h4 style="color: white; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; font-family: 'Inter', sans-serif;">Generated CBOM</h4>
+                                <pre style="margin: 0; color: #a5d6ff; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 6px;">{
+  "domain": "<span id="cbom-domain">pnbindia.in</span>",
+  "tls_version": "1.2",
+  "cipher": "AES-128-GCM",
+  "pqc_status": "Not Ready"
+}</pre>
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 1.2rem; border-radius: 6px; color: #f87171; font-family: 'Inter', sans-serif; font-size: 1rem;">
+                            <strong>🚨 Simulated Attack:</strong> "Harvest Now, Decrypt Later" reconnaissance detected. Foreign adversaries are actively storing your encrypted sessions.
+                        </div>
+                        
+                        <div style="background: rgba(139, 92, 246, 0.1); border: 1px solid #8b5cf6; padding: 1.2rem; border-radius: 6px; font-family: 'Inter', sans-serif;">
+                            <h4 style="color: #c4b5fd; margin-bottom: 0.8rem; font-size: 1.1rem;">Quantum Risk Timeline</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 1rem;"><span>Today:</span> <span style="color: #34d399; font-weight: 600;">Secure for now</span></div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 1rem;"><span>5 Years:</span> <span style="color: #fbbf24; font-weight: 600;">Vulnerable</span></div>
+                            <div style="display: flex; justify-content: space-between; font-size: 1rem;"><span>10 Years:</span> <span style="color: #f87171; font-weight: 600;">Broken by Quantum</span></div>
+                        </div>
+                    </div>
+                </div>    </div>
+                </div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3.5rem; flex-wrap: wrap; font-weight: 600; font-size: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 5px 15px rgba(52,211,153,0.1);">
+                    ✔ CERT-In Ready
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 5px 15px rgba(52,211,153,0.1);">
+                    ✔ NIST PQC Aligned
+                </div>
+                <div style="display: flex; align-items: center; gap: 0.5rem; background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 0.8rem 1.5rem; border-radius: 8px; border: 1px solid rgba(52, 211, 153, 0.3); box-shadow: 0 5px 15px rgba(52,211,153,0.1);">
+                    ✔ RBI Cyber Framework Compatible
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section id="why-us">
+        <h2 class="section-title">Why QuantumGuard?</h2>
+        <p class="section-subtitle">Quantum computers will soon break modern encryption (Shor Algorithm). "Store Now, Decrypt Later" attacks are already happening. Here is how we protect you.</p>
         
-        <div class="auth-buttons">
-            <button class="auth-btn btn-admin" onclick="login('Admin')">Admin Login</button>
-            <button class="auth-btn btn-user" onclick="login('Security Analyst')">Analyst Login</button>
+        <div class="grid-2">
+            <div>
+                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: white;">What We Do</h3>
+                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.1rem;">
+                    QuantumGuard is a state-of-the-art vulnerability scanner designed specifically for the impending quantum threat. We perform non-intrusive, deep-packet analysis of your public-facing APIs, VPNs, and domains. By assessing your TLS handshakes, certificate authorities, and key-exchange mechanisms, we map your entire cryptographic landscape without a single hour of downtime. 
+                </p>
+                <p style="color: var(--text-muted); line-height: 1.8; font-size: 1.1rem;">
+                    We don't just find vulnerabilities; we predict them with AI, establish CBOMs (Cryptographic Bill of Materials), and provide you with actionable steps to migrate to quantum-resistant algorithms (like Kyber and Dilithium) seamlessly.
+                </p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;">
+                <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem;">The Threat Landscape</h4>
+                <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-muted);">
+                    <li>🔴 <strong>Harvesting Attacks:</strong> Hackers intercept encrypted traffic today to decrypt it tomorrow.</li>
+                    <li>🔴 <strong>RSA/ECC Depreciation:</strong> Standard PKI infrastructure will become completely obsolete.</li>
+                    <li>🔴 <strong>Compliance:</strong> Regulatory bodies (NIST) are mandating PQC migrations now.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">Core Features</h2>
+        <p class="section-subtitle">Everything you need to secure your infrastructure against classical and quantum computing threats in an easy-to-use dashboard.</p>
+        
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Real-Time TLS Scanner</h3>
+                <p>Input any internet-exposed domain or IP and receive an instant analysis of its TLS version, cipher suites, and key sizes.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>AI Risk Horizon</h3>
+                <p>Our proprietary AI predicts exactly when your specific systems will succumb to quantum decay, allowing prioritized patching.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <h3>CBOM Generation</h3>
+                <p>Automatically export a complete Cryptographic Bill of Materials (CBOM) for auditing and compliance (JSON format).</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏷️</div>
+                <h3>PQC Label System</h3>
+                <p>Instantly know your standing: Fully Quantum Safe, PQC Ready, or Vulnerable based on the latest NIST algorithms.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔐</div>
+                <h3>Legacy Detection</h3>
+                <p>Detect critical weaknesses like DES, RC4, 3DES, and old TLS (1.0/1.1) protocols instantly alongside quantum threats.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🛡️</div>
+                <h3>Actionable Remediation</h3>
+                <p>Get precise, developer-ready recommendations on how to upgrade to AES-256 and ML-KEM hybrid approaches.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="background: rgba(0,0,0,0.2);">
+        <h2 class="section-title">About Us</h2>
+        <p class="section-subtitle">We are a dedicated team of cybersecurity engineers building the future of cryptography management.</p>
+        
+        <div class="grid-3">
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">P. Ganesh Krishna Reddy</h3>
+                <p style="color: white; font-weight: 600;">Team Lead</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Architecting the core scanning engine and AI prediction algorithms.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Adireddy Pavan</h3>
+                <p style="color: white; font-weight: 600;">Developer</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Handling backend infrastructure, FastAPI routing, and data models.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Cheepuri Venkat Veerendra</h3>
+                <p style="color: white; font-weight: 600;">Tester</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Ensuring rigorous testing, QA flow, and vulnerability accuracy.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="color: var(--text-muted); font-size: 1.1rem;">Team: <strong>ProgVision</strong> | Institute: <strong>Lovely Professional University</strong></p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-subtitle">Have questions about setting up enterprise scanning? Send us a message.</p>
+        
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully! We will get back to you shortly.'); this.reset();">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Work Email" required>
+            <textarea placeholder="How can we help you secure your infrastructure?" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#why-us">Why Us</a>
+            <a href="#features">Features</a>
+            <a data-modal="privacy-modal">Privacy Policy</a>
+            <a data-modal="terms-modal">Terms of Service</a>
+        </div>
+        <p>&copy; 2026 QuantumGuard by ProgVision. All rights reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Hackathon Prototype Build v1.0.0-pqc</p>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="bot-container">
+        <!-- Chat toggle button -->
+        <button id="bot-toggle" class="bot-toggle">💬</button>
+        
+        <!-- Chat window -->
+        <div id="bot-window" class="bot-window">
+            <div class="bot-header">
+                <div class="bot-status">
+                    <div class="online-dot"></div>
+                    QuantumGuard Support
+                </div>
+                <button id="bot-close" class="bot-close">✖</button>
+            </div>
+            <div id="bot-messages" class="bot-messages">
+                <div class="msg bot">Hello! I'm the QuantumGuard AI. Ask me about our features, PQC, or pricing!</div>
+            </div>
+            <div class="bot-input-area">
+                <input type="text" id="bot-input" placeholder="Type your message...">
+                <button id="bot-send">Send</button>
+            </div>
         </div>
     </div>
 
+    <!-- Modals -->
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Privacy Policy</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                At QuantumGuard, we take your data privacy seriously. As a security-first organization, we process scan requests momentarily in memory. We do not permanently store sensitive infrastructure metadata or PII without explicit consent.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                Any CBOM data generated is restricted entirely to the authorized user's session and encrypted in transit. We comply with major data regulations.
+            </p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Terms of Service</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                By using QuantumGuard, you agree to only scan domains and IP addresses that you own or have explicit authorization to assess. Utilizing this scanner for malicious reconnaissance is strictly prohibited.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                The platform is currently in Beta. Predictive AI forecasts are estimations based on current NIST timelines and Shor's Algorithm milestones.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script>
         function login(role) {
             localStorage.setItem('qg_role', role);
             window.location.href = '/dashboard';
         }
+        
+        function runDemoScan() {
+            const btn = document.getElementById('demo-btn');
+            const input = document.getElementById('demo-input').value || 'pnbindia.in';
+            const outputBox = document.getElementById('demo-output');
+            const loader = document.getElementById('demo-loader');
+            const results = document.getElementById('demo-results');
+            
+            const cbomName = document.getElementById('cbom-domain');
+            
+            btn.innerText = 'Analyzing...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+            
+            outputBox.style.display = 'block';
+            loader.style.display = 'flex';
+            results.style.display = 'none';
+            cbomName.innerText = input;
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+                results.style.display = 'flex';
+                btn.innerText = 'Analyze Target';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }, 1800);
+        }
     </script>
+    <script src="/static/landing.js"></script>
 </body>
 </html>

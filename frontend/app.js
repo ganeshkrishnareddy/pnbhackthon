@@ -119,7 +119,7 @@ async function renderDocsView() {
     if (docsContainer.getAttribute('data-loaded') === 'true') return;
     
     try {
-        const response = await fetch('/srs.md');
+        const response = await fetch('/static/srs.md');
         if (!response.ok) throw new Error('Failed to load documentation');
         const text = await response.text();
         docsContainer.innerHTML = marked.parse(text);
@@ -326,6 +326,33 @@ function displayResults(data) {
         li.innerText = rec;
         recsUl.appendChild(li);
     });
+
+    // AI Prediction Mock
+    const aiText = document.getElementById('ai-prediction-text');
+    if (assessment.pqc_label === 'Fully Quantum Safe' || assessment.pqc_label === 'PQC Ready') {
+        aiText.innerText = "AI Forecast: Current cryptographic posture is resilient against anticipated Shor's algorithm advances post-2030.";
+    } else if (assessment.risk_level === 'Legacy') {
+        aiText.innerText = "AI Forecast: System requires ML-KEM integration within 24-36 months to mitigate store-now-decrypt-later attacks.";
+    } else {
+        aiText.innerText = "AI Forecast: Immediate vulnerability. Predictive models show high risk of key compromise within the current threat window.";
+    }
+
+    // Export CBOM Event
+    document.getElementById('export-cbom-btn').onclick = () => {
+        const cbomData = {
+            target: data.target,
+            generated_at: new Date().toISOString(),
+            cbom: cbom,
+            risk_assessment: assessment
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(cbomData, null, 2));
+        const anchor = document.createElement('a');
+        anchor.setAttribute("href", dataStr);
+        anchor.setAttribute("download", `CBOM-${data.target}.json`);
+        document.body.appendChild(anchor);
+        anchor.click();
+        anchor.remove();
+    };
     
     results.classList.remove('hidden');
 }

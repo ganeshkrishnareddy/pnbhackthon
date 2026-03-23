@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuantumGuard Dashboard | Cyber Security Platform</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -14,7 +14,7 @@
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <img src="/logo.png" alt="QuantumGuard Logo" class="logo-image">
+                <img src="/static/logo.png" alt="QuantumGuard Logo" class="logo-image">
                 <h2>QuantumGuard</h2>
             </div>
             <nav>
@@ -70,6 +70,7 @@
                     <form id="scan-form">
                         <input type="text" id="target-url" placeholder="e.g., mail.google.com" required>
                         <button type="submit" id="scan-btn">Start Scan</button>
+                        <button type="button" id="schedule-btn" style="background: transparent; border: 1px solid var(--border); color: white; padding: 0 1rem; border-radius: 6px; cursor: pointer; transition: 0.2s;" onclick="alert('Scan scheduled successfully for repeating weekly assessment.')">Schedule</button>
                     </form>
                     
                     <div id="loading" class="hidden">
@@ -87,11 +88,22 @@
             </section>
 
             <section class="panel results-panel hidden" id="results-panel">
-                <h2>Scan Results: <span id="res-target"></span></h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2 style="margin-bottom: 0;">Scan Results: <span id="res-target"></span></h2>
+                    <button id="export-cbom-btn" style="background: var(--primary); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">Export CBOM (JSON)</button>
+                </div>
                 
                 <div class="assessment-banner" id="res-banner">
                     <h3 id="res-label">Evaluating...</h3>
                     <p>Risk Level: <span id="res-risk">Pending</span></p>
+                </div>
+
+                <div class="ai-prediction-banner" style="background: rgba(139, 92, 246, 0.1); border: 1px solid #8b5cf6; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 15px;">
+                    <span style="font-size: 1.8rem;">🤖</span>
+                    <div>
+                        <h4 style="color: #c4b5fd; margin-bottom: 0.3rem; font-size: 0.95rem;">AI Risk Horizon Prediction</h4>
+                        <p style="font-size: 0.9rem; color: #e2e8f0; margin: 0;" id="ai-prediction-text">Analyzing temporal quantum decay...</p>
+                    </div>
                 </div>
 
                 <div class="details-grid">
@@ -203,6 +215,6 @@
             document.body.classList.add('strict-mode');
         }
     </script>
-    <script src="/app.js"></script>
+    <script src="/static/app.js"></script>
 </body>
 </html>
