@@ -390,3 +390,37 @@ body {
 .docs-panel strong {
     color: white;
 }
+
+@keyframes pulse-glow-red {
+    0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+    50% { box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); }
+    100% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+}
+
+@keyframes modalPop {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.form-panel-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.form-panel-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.stat-val {
+    transition: color 0.3s ease;
+}
+.stat-card:hover .stat-val {
+    text-shadow: 0 0 15px currentColor;
+}

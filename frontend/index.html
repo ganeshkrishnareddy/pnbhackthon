@@ -11,16 +11,16 @@
 
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="#hero" class="nav-logo">
+        <a href="/" class="nav-logo">
             <img src="/static/logo.png" alt="QuantumGuard">
             QuantumGuard
         </a>
         <button class="menu-toggle">☰</button>
         <div class="nav-links">
-            <a href="#why-us">Why Us</a>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
             <button class="nav-btn" onclick="login('Admin')">Admin Login</button>
             <button class="nav-btn" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border);" onclick="login('Security Analyst')">Analyst Login</button>
         </div>
@@ -29,12 +29,13 @@
     <!-- Hero Section -->
     <section id="hero">
         <img src="/static/logo.png" alt="QuantumGuard" class="hero-logo">
-        <h1>QuantumGuard Scanner</h1>
-        <p>The enterprise-grade Post-Quantum Cryptography (PQC) readiness scanner. Instantly detect vulnerabilities, analyze legacy cipher suites, and prepare your public-facing infrastructure for the quantum era.</p>
+        <h1>QuantumGuard: The Future of Encryption Starts Now</h1>
+        <p style="font-size: 1.3rem; margin-bottom: 1.5rem;">Every encrypted system today is already being recorded by attackers.<br>The question is — will it break tomorrow?</p>
         <div class="hero-btns">
-            <button class="btn-primary" onclick="login('Admin')">Start Free Scan</button>
-            <a href="#why-us" class="btn-secondary" style="display:inline-block; text-align:center; text-decoration: none;">Learn More</a>
+            <button class="btn-primary" onclick="login('Admin')" style="box-shadow: 0 0 20px rgba(37, 99, 235, 0.5); animation: pulse-glow 2s infinite;">🔍 Scan My Infrastructure</button>
+            <a href="/why-us" class="btn-secondary" style="display:inline-block; text-align:center; text-decoration: none;">Learn More</a>
         </div>
+        <p style="font-size: 1.2rem; color: var(--primary); margin-top: 1.5rem; font-weight: bold; font-style: italic;">“We don’t detect vulnerabilities. We predict which encryption will fail next.”</p>
     </section>
 
     <!-- NEW SECTION: Interactive Live Scan Demo -->
@@ -48,13 +49,19 @@
             <div style="background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 12px; padding: 2.5rem; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
                 <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
                     <input type="text" id="demo-input" placeholder="Enter target (e.g., pnbbanking.in)" style="flex: 1; min-width: 250px; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid var(--border); color: white; border-radius: 8px; font-size: 1.05rem; outline: none; transition: 0.2s;" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
-                    <button id="demo-btn" onclick="runDemoScan()" style="padding: 0 2.5rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: 0.2s; min-height: 50px;" onmouseover="if(!this.disabled) this.style.background='#2563eb'" onmouseout="if(!this.disabled) this.style.background='var(--primary)'">Analyze Target</button>
+                    <button id="demo-btn" onclick="runDemoScan()" style="padding: 0 2.5rem; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; font-size: 1.05rem; cursor: pointer; transition: 0.2s; min-height: 50px; box-shadow: 0 0 15px rgba(37, 99, 235, 0.4);" onmouseover="if(!this.disabled) this.style.background='#2563eb'" onmouseout="if(!this.disabled) this.style.background='var(--primary)'">Analyze Target</button>
+                </div>
+                
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem; font-family: 'JetBrains Mono', monospace; font-size: 0.95rem;">
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; padding: 0.8rem 1.2rem; border-radius: 6px; color: #f87171;" id="demo-qrs">🔴 Quantum Risk Score: <strong style="color: white;">—</strong></div>
+                    <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid #f59e0b; padding: 0.8rem 1.2rem; border-radius: 6px; color: #fbbf24;" id="demo-ttb">⏳ Time to Break: <strong style="color: white;">—</strong></div>
+                    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid #3b82f6; padding: 0.8rem 1.2rem; border-radius: 6px; color: #60a5fa;" id="demo-assets">📦 Cryptographic Assets: <strong style="color: white;">—</strong></div>
                 </div>
                 
                 <div id="demo-output" style="display: none; background: #0d1117; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 1.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #c9d1d9; line-height: 1.6;">
-                    <div id="demo-loader" style="color: var(--primary); margin-bottom: 0.5rem; display: none; align-items: center; gap: 10px;">
+                    <div id="demo-loader" style="color: var(--primary); margin-bottom: 0.5rem; display: none; align-items: center; gap: 10px; font-weight: bold; animation: pulse 1s infinite;">
                         <span class="spinner" style="width: 15px; height: 15px; display: inline-block;"></span>
-                        [System] Initializing deep cryptographic handshake with target...
+                        Scanning TLS Handshake & Simulating Quantum Decay...
                     </div>
                     <div id="demo-results" style="display: flex; flex-direction: column; gap: 1.5rem;">
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
@@ -107,117 +114,12 @@
         </div>
     </section>
 
-    <!-- Why Us Section -->
-    <section id="why-us">
-        <h2 class="section-title">Why QuantumGuard?</h2>
-        <p class="section-subtitle">Quantum computers will soon break modern encryption (Shor Algorithm). "Store Now, Decrypt Later" attacks are already happening. Here is how we protect you.</p>
-        
-        <div class="grid-2">
-            <div>
-                <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: white;">What We Do</h3>
-                <p style="color: var(--text-muted); line-height: 1.8; margin-bottom: 1.5rem; font-size: 1.1rem;">
-                    QuantumGuard is a state-of-the-art vulnerability scanner designed specifically for the impending quantum threat. We perform non-intrusive, deep-packet analysis of your public-facing APIs, VPNs, and domains. By assessing your TLS handshakes, certificate authorities, and key-exchange mechanisms, we map your entire cryptographic landscape without a single hour of downtime. 
-                </p>
-                <p style="color: var(--text-muted); line-height: 1.8; font-size: 1.1rem;">
-                    We don't just find vulnerabilities; we predict them with AI, establish CBOMs (Cryptographic Bill of Materials), and provide you with actionable steps to migrate to quantum-resistant algorithms (like Kyber and Dilithium) seamlessly.
-                </p>
-            </div>
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;">
-                <h4 style="color: var(--primary); margin-bottom: 1rem; font-size: 1.2rem;">The Threat Landscape</h4>
-                <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; color: var(--text-muted);">
-                    <li>🔴 <strong>Harvesting Attacks:</strong> Hackers intercept encrypted traffic today to decrypt it tomorrow.</li>
-                    <li>🔴 <strong>RSA/ECC Depreciation:</strong> Standard PKI infrastructure will become completely obsolete.</li>
-                    <li>🔴 <strong>Compliance:</strong> Regulatory bodies (NIST) are mandating PQC migrations now.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features">
-        <h2 class="section-title">Core Features</h2>
-        <p class="section-subtitle">Everything you need to secure your infrastructure against classical and quantum computing threats in an easy-to-use dashboard.</p>
-        
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Real-Time TLS Scanner</h3>
-                <p>Input any internet-exposed domain or IP and receive an instant analysis of its TLS version, cipher suites, and key sizes.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🤖</div>
-                <h3>AI Risk Horizon</h3>
-                <p>Our proprietary AI predicts exactly when your specific systems will succumb to quantum decay, allowing prioritized patching.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">📦</div>
-                <h3>CBOM Generation</h3>
-                <p>Automatically export a complete Cryptographic Bill of Materials (CBOM) for auditing and compliance (JSON format).</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🏷️</div>
-                <h3>PQC Label System</h3>
-                <p>Instantly know your standing: Fully Quantum Safe, PQC Ready, or Vulnerable based on the latest NIST algorithms.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🔐</div>
-                <h3>Legacy Detection</h3>
-                <p>Detect critical weaknesses like DES, RC4, 3DES, and old TLS (1.0/1.1) protocols instantly alongside quantum threats.</p>
-            </div>
-            <div class="card">
-                <div class="card-icon">🛡️</div>
-                <h3>Actionable Remediation</h3>
-                <p>Get precise, developer-ready recommendations on how to upgrade to AES-256 and ML-KEM hybrid approaches.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" style="background: rgba(0,0,0,0.2);">
-        <h2 class="section-title">About Us</h2>
-        <p class="section-subtitle">We are a dedicated team of cybersecurity engineers building the future of cryptography management.</p>
-        
-        <div class="grid-3">
-            <div class="card" style="text-align: center;">
-                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">P. Ganesh Krishna Reddy</h3>
-                <p style="color: white; font-weight: 600;">Team Lead</p>
-                <p style="font-size: 0.9rem; margin-top: 1rem;">Architecting the core scanning engine and AI prediction algorithms.</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Adireddy Pavan</h3>
-                <p style="color: white; font-weight: 600;">Developer</p>
-                <p style="font-size: 0.9rem; margin-top: 1rem;">Handling backend infrastructure, FastAPI routing, and data models.</p>
-            </div>
-            <div class="card" style="text-align: center;">
-                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Cheepuri Venkat Veerendra</h3>
-                <p style="color: white; font-weight: 600;">Tester</p>
-                <p style="font-size: 0.9rem; margin-top: 1rem;">Ensuring rigorous testing, QA flow, and vulnerability accuracy.</p>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <p style="color: var(--text-muted); font-size: 1.1rem;">Team: <strong>ProgVision</strong> | Institute: <strong>Lovely Professional University</strong></p>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2 class="section-title">Get in Touch</h2>
-        <p class="section-subtitle">Have questions about setting up enterprise scanning? Send us a message.</p>
-        
-        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully! We will get back to you shortly.'); this.reset();">
-            <input type="text" placeholder="Your Name" required>
-            <input type="email" placeholder="Your Work Email" required>
-            <textarea placeholder="How can we help you secure your infrastructure?" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="footer-links">
-            <a href="#hero">Home</a>
-            <a href="#why-us">Why Us</a>
-            <a href="#features">Features</a>
+            <a href="/">Home</a>
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
             <a data-modal="privacy-modal">Privacy Policy</a>
             <a data-modal="terms-modal">Terms of Service</a>
         </div>
@@ -292,6 +194,11 @@
             
             const cbomName = document.getElementById('cbom-domain');
             
+            // Dummy logic for metrics
+            document.getElementById('demo-qrs').innerHTML = '🔴 Quantum Risk Score: <strong style="color: white;">Calculating...</strong>';
+            document.getElementById('demo-ttb').innerHTML = '⏳ Time to Break: <strong style="color: white;">Analyzing Math...</strong>';
+            document.getElementById('demo-assets').innerHTML = '📦 Cryptographic Assets: <strong style="color: white;">Scanning...</strong>';
+            
             btn.innerText = 'Analyzing...';
             btn.style.opacity = '0.7';
             btn.disabled = true;
@@ -302,12 +209,16 @@
             cbomName.innerText = input;
             
             setTimeout(() => {
+                document.getElementById('demo-qrs').innerHTML = '🔴 Quantum Risk Score: <strong style="color: white;">87 / 100</strong>';
+                document.getElementById('demo-ttb').innerHTML = '⏳ Time to Break: <strong style="color: white;">3.2 Years</strong>';
+                document.getElementById('demo-assets').innerHTML = '📦 Cryptographic Assets: <strong style="color: white;">1,428 Found</strong>';
+
                 loader.style.display = 'none';
                 results.style.display = 'flex';
                 btn.innerText = 'Analyze Target';
                 btn.style.opacity = '1';
                 btn.disabled = false;
-            }, 1800);
+            }, 2500);
         }
     </script>
     <script src="/static/landing.js"></script>

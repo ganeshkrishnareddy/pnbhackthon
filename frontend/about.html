@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumGuard | Post-Quantum Cybersecurity</title>
+    <link rel="stylesheet" href="/static/landing.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="/static/logo.png" alt="QuantumGuard">
+            QuantumGuard
+        </a>
+        <button class="menu-toggle">☰</button>
+        <div class="nav-links">
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <button class="nav-btn" onclick="login('Admin')">Admin Login</button>
+            <button class="nav-btn" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border);" onclick="login('Security Analyst')">Analyst Login</button>
+        </div>
+    </nav>
+
+    
+<div style="padding-top: 100px; min-height: calc(100vh - 300px);">
+<!-- About Section -->
+    <section id="about" style="background: rgba(0,0,0,0.2);">
+        <h2 class="section-title">About Us</h2>
+        <p class="section-subtitle">We are a dedicated team of cybersecurity engineers building the future of cryptography management.</p>
+        
+        <div class="grid-3">
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">P. Ganesh Krishna Reddy</h3>
+                <p style="color: white; font-weight: 600;">Team Lead</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Architecting the core scanning engine and AI prediction algorithms.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Adireddy Pavan</h3>
+                <p style="color: white; font-weight: 600;">Developer</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Handling backend infrastructure, FastAPI routing, and data models.</p>
+            </div>
+            <div class="card" style="text-align: center;">
+                <h3 style="color: var(--primary); margin-bottom: 0.5rem;">Cheepuri Venkat Veerendra</h3>
+                <p style="color: white; font-weight: 600;">Tester</p>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Ensuring rigorous testing, QA flow, and vulnerability accuracy.</p>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 4rem;">
+            <h3 style="color: white; font-size: 1.8rem; margin-bottom: 1rem;">Our Mission</h3>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                With the rapid advancement in quantum computing, traditional encryption methods like RSA and ECC are on the verge of becoming obsolete. Our mission is to democratize post-quantum cryptography (PQC) readiness. We provide organizations of all sizes with enterprise-grade tools to assess their cryptographic posture, generate accurate CBOMs, and transition to quantum-safe algorithms before "Harvest Now, Decrypt Later" attacks compromise their most sensitive data.
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem; flex-wrap: wrap;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; text-align: center; min-width: 200px;">
+                <h4 style="color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem;">100%</h4>
+                <p style="color: var(--text-muted);">Non-Intrusive Scanning</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; text-align: center; min-width: 200px;">
+                <h4 style="color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem;">0-Day</h4>
+                <p style="color: var(--text-muted);">PQC Readiness Insight</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; text-align: center; min-width: 200px;">
+                <h4 style="color: var(--primary); font-size: 2rem; margin-bottom: 0.5rem;">24/7</h4>
+                <p style="color: var(--text-muted);">Real-Time Intelligence</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 4rem;">
+            <p style="color: var(--text-muted); font-size: 1.1rem; padding: 1rem; border-top: 1px solid var(--border); display: inline-block;">
+                Team: <strong style="color: white;">ProgVision</strong> | Institute: <strong style="color: white;">Lovely Professional University</strong>
+            </p>
+        </div>
+    </section>
+
+    
+</div>
+<!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
+            <a data-modal="privacy-modal">Privacy Policy</a>
+            <a data-modal="terms-modal">Terms of Service</a>
+        </div>
+        <p>&copy; 2026 QuantumGuard by ProgVision. All rights reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Hackathon Prototype Build v1.0.0-pqc</p>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="bot-container">
+        <!-- Chat toggle button -->
+        <button id="bot-toggle" class="bot-toggle">💬</button>
+        
+        <!-- Chat window -->
+        <div id="bot-window" class="bot-window">
+            <div class="bot-header">
+                <div class="bot-status">
+                    <div class="online-dot"></div>
+                    QuantumGuard Support
+                </div>
+                <button id="bot-close" class="bot-close">✖</button>
+            </div>
+            <div id="bot-messages" class="bot-messages">
+                <div class="msg bot">Hello! I'm the QuantumGuard AI. Ask me about our features, PQC, or pricing!</div>
+            </div>
+            <div class="bot-input-area">
+                <input type="text" id="bot-input" placeholder="Type your message...">
+                <button id="bot-send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Privacy Policy</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                At QuantumGuard, we take your data privacy seriously. As a security-first organization, we process scan requests momentarily in memory. We do not permanently store sensitive infrastructure metadata or PII without explicit consent.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                Any CBOM data generated is restricted entirely to the authorized user's session and encrypted in transit. We comply with major data regulations.
+            </p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Terms of Service</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                By using QuantumGuard, you agree to only scan domains and IP addresses that you own or have explicit authorization to assess. Utilizing this scanner for malicious reconnaissance is strictly prohibited.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                The platform is currently in Beta. Predictive AI forecasts are estimations based on current NIST timelines and Shor's Algorithm milestones.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function login(role) {
+            localStorage.setItem('qg_role', role);
+            window.location.href = '/dashboard';
+        }
+        
+        function runDemoScan() {
+            const btn = document.getElementById('demo-btn');
+            const input = document.getElementById('demo-input').value || 'pnbindia.in';
+            const outputBox = document.getElementById('demo-output');
+            const loader = document.getElementById('demo-loader');
+            const results = document.getElementById('demo-results');
+            
+            const cbomName = document.getElementById('cbom-domain');
+            
+            btn.innerText = 'Analyzing...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+            
+            outputBox.style.display = 'block';
+            loader.style.display = 'flex';
+            results.style.display = 'none';
+            cbomName.innerText = input;
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+                results.style.display = 'flex';
+                btn.innerText = 'Analyze Target';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }, 1800);
+        }
+    </script>
+    <script src="/static/landing.js"></script>
+</body>
+</html>

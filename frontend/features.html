@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantumGuard | Post-Quantum Cybersecurity</title>
+    <link rel="stylesheet" href="/static/landing.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">
+            <img src="/static/logo.png" alt="QuantumGuard">
+            QuantumGuard
+        </a>
+        <button class="menu-toggle">☰</button>
+        <div class="nav-links">
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <button class="nav-btn" onclick="login('Admin')">Admin Login</button>
+            <button class="nav-btn" style="background: rgba(255,255,255,0.1); color: white; border: 1px solid var(--border);" onclick="login('Security Analyst')">Analyst Login</button>
+        </div>
+    </nav>
+
+    
+<div style="padding-top: 100px; min-height: calc(100vh - 300px);">
+<!-- Features Section -->
+    <section id="features">
+        <h2 class="section-title">Core Features</h2>
+        <p class="section-subtitle">Everything you need to secure your infrastructure against classical and quantum computing threats in an easy-to-use dashboard.</p>
+        
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon">⚡</div>
+                <h3>Real-Time TLS Scanner</h3>
+                <p>Input any internet-exposed domain or IP and receive an instant analysis of its TLS version, cipher suites, and key sizes.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🤖</div>
+                <h3>AI Risk Horizon</h3>
+                <p>Our proprietary AI predicts exactly when your specific systems will succumb to quantum decay, allowing prioritized patching.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">📦</div>
+                <h3>CBOM Generation</h3>
+                <p>Automatically export a complete Cryptographic Bill of Materials (CBOM) for auditing and compliance (JSON format).</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🏷️</div>
+                <h3>PQC Label System</h3>
+                <p>Instantly know your standing: Fully Quantum Safe, PQC Ready, or Vulnerable based on the latest NIST algorithms.</p>
+            </div>
+            <div class="card">
+                <div class="card-icon">🔐</div>
+                <h3>Legacy Detection</h3>
+                <p>Detect critical weaknesses like DES, RC4, 3DES, and old TLS (1.0/1.1) protocols instantly alongside quantum threats.</p>
+            </div>
+            <div class="card" style="border: 2px solid var(--primary); box-shadow: 0 0 20px rgba(37,99,235,0.3); transform: scale(1.02);">
+                <div class="card-icon" style="color: var(--primary);">💥</div>
+                <h3 style="color: var(--primary);">Quantum Attack Simulator</h3>
+                <p><strong>[WOW FEATURE]</strong> Simulate the exact structural blast radius on your network if RSA-2048 breaks tomorrow.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 5rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 16px; padding: 3rem; text-align: center;">
+            <h3 style="font-size: 2rem; color: white; margin-bottom: 2rem;">🧠 How Our AI Predicts Quantum Risk</h3>
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; text-align: left;">
+                <ul style="list-style-type: none; padding: 0; font-size: 1.1rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 1rem;">
+                    <li style="display: flex; align-items: center; gap: 10px;"><span style="color: var(--primary); font-size: 1.5rem;">📡</span> Collect real-time TLS + cipher suite data</li>
+                    <li style="display: flex; align-items: center; gap: 10px;"><span style="color: var(--primary); font-size: 1.5rem;">🧮</span> Map complex cryptographic algorithm strength</li>
+                    <li style="display: flex; align-items: center; gap: 10px;"><span style="color: a5d6ff; font-size: 1.5rem;">⚖️</span> Correlate with live NIST PQC readiness timelines</li>
+                    <li style="display: flex; align-items: center; gap: 10px;"><span style="color: f87171; font-size: 1.5rem;">⏳</span> Calculate exact probability & time-to-decay (TTD)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    
+</div>
+<!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/why-us">Why Us</a>
+            <a href="/features">Features</a>
+            <a data-modal="privacy-modal">Privacy Policy</a>
+            <a data-modal="terms-modal">Terms of Service</a>
+        </div>
+        <p>&copy; 2026 QuantumGuard by ProgVision. All rights reserved.</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem;">Hackathon Prototype Build v1.0.0-pqc</p>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div class="bot-container">
+        <!-- Chat toggle button -->
+        <button id="bot-toggle" class="bot-toggle">💬</button>
+        
+        <!-- Chat window -->
+        <div id="bot-window" class="bot-window">
+            <div class="bot-header">
+                <div class="bot-status">
+                    <div class="online-dot"></div>
+                    QuantumGuard Support
+                </div>
+                <button id="bot-close" class="bot-close">✖</button>
+            </div>
+            <div id="bot-messages" class="bot-messages">
+                <div class="msg bot">Hello! I'm the QuantumGuard AI. Ask me about our features, PQC, or pricing!</div>
+            </div>
+            <div class="bot-input-area">
+                <input type="text" id="bot-input" placeholder="Type your message...">
+                <button id="bot-send">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="privacy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Privacy Policy</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                At QuantumGuard, we take your data privacy seriously. As a security-first organization, we process scan requests momentarily in memory. We do not permanently store sensitive infrastructure metadata or PII without explicit consent.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                Any CBOM data generated is restricted entirely to the authorized user's session and encrypted in transit. We comply with major data regulations.
+            </p>
+        </div>
+    </div>
+
+    <div id="terms-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✖</button>
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">Terms of Service</h2>
+            <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem;">
+                By using QuantumGuard, you agree to only scan domains and IP addresses that you own or have explicit authorization to assess. Utilizing this scanner for malicious reconnaissance is strictly prohibited.
+            </p>
+            <p style="color: var(--text-muted); line-height: 1.6;">
+                The platform is currently in Beta. Predictive AI forecasts are estimations based on current NIST timelines and Shor's Algorithm milestones.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function login(role) {
+            localStorage.setItem('qg_role', role);
+            window.location.href = '/dashboard';
+        }
+        
+        function runDemoScan() {
+            const btn = document.getElementById('demo-btn');
+            const input = document.getElementById('demo-input').value || 'pnbindia.in';
+            const outputBox = document.getElementById('demo-output');
+            const loader = document.getElementById('demo-loader');
+            const results = document.getElementById('demo-results');
+            
+            const cbomName = document.getElementById('cbom-domain');
+            
+            btn.innerText = 'Analyzing...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+            
+            outputBox.style.display = 'block';
+            loader.style.display = 'flex';
+            results.style.display = 'none';
+            cbomName.innerText = input;
+            
+            setTimeout(() => {
+                loader.style.display = 'none';
+                results.style.display = 'flex';
+                btn.innerText = 'Analyze Target';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }, 1800);
+        }
+    </script>
+    <script src="/static/landing.js"></script>
+</body>
+</html>

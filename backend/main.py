@@ -83,6 +83,22 @@ async def serve_landing():
 async def serve_dashboard():
     return FileResponse(os.path.join(frontend_path, "dashboard.html"))
 
+@app.get("/why-us")
+async def serve_why_us():
+    return FileResponse(os.path.join(frontend_path, "why-us.html"))
+
+@app.get("/features")
+async def serve_features():
+    return FileResponse(os.path.join(frontend_path, "features.html"))
+
+@app.get("/about")
+async def serve_about():
+    return FileResponse(os.path.join(frontend_path, "about.html"))
+
+@app.get("/contact")
+async def serve_contact():
+    return FileResponse(os.path.join(frontend_path, "contact.html"))
+
 # Mount styling and scripts at explicit path
 app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 
